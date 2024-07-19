@@ -14,6 +14,11 @@
     "categories": {
       "auth": {
         "fabricaidapp2ca16df2": {}
+      },
+      "geo": {
+        "bins": {},
+        "binsmap": {},
+        "binsmap1": {}
       }
     }
   }
