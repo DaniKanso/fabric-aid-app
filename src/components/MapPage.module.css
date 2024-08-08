@@ -1,27 +1,50 @@
-/* components/MapPage.module.css */
-.mapPageContainer {
-    position: relative;
-    width: 100%;
-    height: 100vh;
+:root {
+    --primary-color: #61dafb;
+    --primary-dark-color: #21a1f1;
+    --secondary-color: #282c34;
+    --secondary-light-color: #3c3f4b;
+    --text-color: white;
+    --background-color: #f9f9f9;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --font-size-title: 1.5em;
+    --font-size-button: 1em;
+    --border-radius: 8px;
 }
 
-.backButton {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #f0f0f0;
+.map-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--secondary-light-color);
+}
+
+.sidebar {
+    background: var(--background-color);
+    box-shadow: 0 2px 4px var(--box-shadow-color);
+    padding: 20px;
+    overflow-y: auto;
+    width: 300px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: var(--font-size-title);
+    color: var(--secondary-color);
+}
+
+.sidebar button {
+    background: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    z-index: 1; /* Ensure the button is above the map */
+    border-radius: var(--border-radius);
+    margin-top: 10px;
+    font-size: var(--font-size-button);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#map {
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
+.sidebar button:hover {
+    background: var(--primary-dark-color);
+    transform: translateY(-3px);
 }

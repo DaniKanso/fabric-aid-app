@@ -1,0 +1,43 @@
+.map-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.sidebar {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto;
+    width: 300px; /* Adjust width as needed */
+    border-right: 2px solid #61dafb; /* Border for visual separation */
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #282c34;
+}
+
+.sidebar button {
+    background: #3887be;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%; /* Make buttons full-width for consistency */
+}
+
+.sidebar button:hover {
+    background: #286d99;
+    transform: translateY(-3px);
+}
+
+.sidebar button + button {
+    margin-top: 15px; /* Add extra space between buttons */
+}

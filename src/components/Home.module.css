@@ -1,17 +1,41 @@
+:root {
+    --primary-color: #61dafb;
+    --primary-dark-color: #21a1f1;
+    --secondary-color: #282c34;
+    --secondary-light-color: #3c3f4b;
+    --text-color: white;
+    --font-size-logo: 1.8em;
+    --font-size-navbutton: 1.1em;
+    --font-size-mainbutton: 1.3em;
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--secondary-light-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
 .container {
     text-align: center;
+    padding: 2em;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 1em;
-    background-color: #282c34;
-    color: white;
+    align-items: center;
+    padding: 1em 2em;
+    background-color: var(--secondary-color);
+    border-bottom: 2px solid var(--primary-color);
 }
 
 .navLogo {
-    font-size: 1.5em;
+    font-size: var(--font-size-logo);
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 .navLinks {
@@ -20,20 +44,32 @@
 }
 
 .navButton {
-    background-color: #61dafb;
-    color: #282c34;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
-    padding: 0.5em 1em;
+    padding: 0.7em 1.5em;
     cursor: pointer;
-    font-size: 1em;
+    font-size: var(--font-size-navbutton);
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
 }
 
 .navButton:hover {
-    background-color: #21a1f1;
+    background-color: var(--primary-dark-color);
 }
 
 .mainContent {
     margin: 2em 0;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 2em;
 }
 
 .buttonsContainer {
@@ -44,14 +80,17 @@
 }
 
 .mainButton {
-    background-color: #61dafb;
-    color: #282c34;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     padding: 1em 2em;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: var(--font-size-mainbutton);
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .mainButton:hover {
-    background-color: #21a1f1;
+    background-color: var(--primary-dark-color);
+    transform: translateY(-3px);
 }
