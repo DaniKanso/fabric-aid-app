@@ -2,16 +2,15 @@ import { getCurrentUser } from 'aws-amplify/auth';
 // App.js
 import React, { useEffect } from 'react';
 import './App.css';
-import { Amplify } from 'aws-amplify';
-import awsconfig from './aws-exports';
+
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './components/Home';
 import MapPage from './components/MapPage'; // Import MapPage
+import ShopMapPage from './components/ShopMapPage';
 
 
-Amplify.configure(awsconfig);
 
 function App() {
     const navigate = useNavigate();
@@ -46,6 +45,7 @@ function AppWithRouter() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/map" element={<MapPage />} />
+                <Route path="/shop" element={<ShopMapPage />} />
                 <Route path="/login" element={<App />} />
             </Routes>
         </Router>

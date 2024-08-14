@@ -14,11 +14,27 @@
     "categories": {
       "auth": {
         "fabricaidapp2ca16df2": {}
+      }
+    }
+  },
+  "deving": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fabricaidapp-deving-a85c1-authRole",
+      "UnauthRoleArn": "arn:aws:iam::381491916239:role/amplify-fabricaidapp-deving-a85c1-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::381491916239:role/amplify-fabricaidapp-deving-a85c1-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-fabricaidapp-deving-a85c1-deployment",
+      "UnauthRoleName": "amplify-fabricaidapp-deving-a85c1-unauthRole",
+      "StackName": "amplify-fabricaidapp-deving-a85c1",
+      "StackId": "arn:aws:cloudformation:us-east-1:381491916239:stack/amplify-fabricaidapp-deving-a85c1/959100f0-5a01-11ef-a805-12b7e36bcd0f",
+      "AmplifyAppId": "d3q31oc7zhb3j6"
+    },
+    "categories": {
+      "auth": {
+        "fabricaidapp28fdd40f": {}
       },
       "geo": {
-        "bins": {},
-        "binsmap": {},
-        "binsmap1": {}
+        "Bmap": {}
       }
     }
   }

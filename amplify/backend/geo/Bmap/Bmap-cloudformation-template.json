@@ -64,7 +64,7 @@
     }
   },
   "Parameters": {
-    "authfabricaidapp2ca16df2UserPoolId": {
+    "authfabricaidapp28fdd40fUserPoolId": {
       "Type": "String"
     },
     "authRoleName": {
@@ -326,5 +326,5 @@
       }
     }
   },
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.4\",\"stackType\":\"geo-Map\",\"metadata\":{}}"
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.6\",\"stackType\":\"geo-Map\",\"metadata\":{}}"
 }

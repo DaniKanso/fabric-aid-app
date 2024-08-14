@@ -1,24 +1,19 @@
-// components/MapComponent.js
 import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import { createMap } from 'maplibre-gl-js-amplify';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 import 'maplibre-gl-js-amplify/dist/public/amplify-geocoder.css';
-import * as turf from '@turf/turf';
-import bins from './bins.json'; 
-import ORS from 'openrouteservice-js';
-import './MapComponent.css'; // Add CSS for sidebar styling
-
-const orsDirections = new ORS.Directions({
-    api_key: '5b3ce3597851110001cf6248b2b878a244324b52acd0d40f0fac5de3'
-});
+import bins from './bins.json';
+import { LocationClient, CalculateRouteCommand } from '@aws-sdk/client-location';
+import './MapComponent.css';
+import { fetchAuthSession } from '@aws-amplify/auth';
 
 const MapComponent = () => {
     const mapRef = useRef(null);
     const [selectedBin, setSelectedBin] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(false);
-    const mapInstance = useRef(null); // Use a ref to hold the map instance
+    const mapInstance = useRef(null);
 
     useEffect(() => {
         const initializeMap = async (center) => {
@@ -29,21 +24,23 @@ const MapComponent = () => {
                     zoom: 14,
                 });
 
-                mapInstance.current = map; // Store the map instance
-
-                console.log('Map initialized at center:', center);
+                mapInstance.current = map;
 
                 new maplibregl.Marker({ color: 'red' })
                     .setLngLat(center)
                     .addTo(map);
 
-                const userLocation = turf.point(center);
+                const userLocation = [center[0], center[1]];
+
                 let nearestBin = null;
                 let minDistance = Infinity;
 
                 bins.forEach(bin => {
-                    const binLocation = turf.point([bin.x, bin.y]);
-                    const distance = turf.distance(userLocation, binLocation);
+                    const binLocation = [bin.x, bin.y];
+                    const distance = Math.sqrt(
+                        Math.pow(userLocation[0] - binLocation[0], 2) +
+                        Math.pow(userLocation[1] - binLocation[1], 2)
+                    );
 
                     const marker = new maplibregl.Marker()
                         .setLngLat([bin.x, bin.y])
@@ -55,28 +52,43 @@ const MapComponent = () => {
                     });
 
                     if (distance < minDistance) {
-                        nearestBin = [bin.x, bin.y];
+                        nearestBin = binLocation;
                         minDistance = distance;
                     }
                 });
 
                 if (nearestBin) {
-                    console.log('Nearest bin location:', nearestBin);
+                    try {
+                        // Obtain AWS credentials using Amplify Auth
+                        const session = await fetchAuthSession();
+                        const client = new LocationClient({
+                            credentials: session.credentials,
+                            region: 'us-east-1',
+                        });
 
-                    orsDirections.calculate({
-                        coordinates: [center, nearestBin],
-                        profile: 'driving-car',
-                        format: 'geojson'
-                    }).then(response => {
-                        const route = response.routes[0].geometry;
+                        const params = {
+                            CalculatorName: 'MyRouteCalculator', 
+                            DeparturePosition: center,
+                            DestinationPosition: nearestBin,
+                            TravelMode: 'Car' // Adjust travel mode if needed
+                        };
+
+                        const command = new CalculateRouteCommand(params);
+                        const response = await client.send(command);
+
+                        const route = response.Legs[0].Geometry.LineString;
+
+                        const routeGeoJSON = {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'LineString',
+                                coordinates: route.map(([long, lat]) => [long, lat]),
+                            }
+                        };
 
                         map.addSource('route', {
                             type: 'geojson',
-                            data: {
-                                type: 'Feature',
-                                properties: {},
-                                geometry: route
-                            }
+                            data: routeGeoJSON
                         });
 
                         map.addLayer({
@@ -93,9 +105,9 @@ const MapComponent = () => {
                                 'line-opacity': 0.75
                             }
                         });
-                    }).catch(error => {
+                    } catch (error) {
                         console.error('Error getting directions:', error);
-                    });
+                    }
                 }
             }
         };
@@ -105,7 +117,6 @@ const MapComponent = () => {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const { latitude, longitude } = position.coords;
-                        console.log('User location:', { latitude, longitude });
                         initializeMap([longitude, latitude]);
                     },
                     (error) => {
@@ -131,59 +142,66 @@ const MapComponent = () => {
     return (
         <div className="map-container">
             <div ref={mapRef} id="map" style={{ width: sidebarVisible ? '75%' : '100%', height: '100vh', float: 'left' }} />
-            {sidebarVisible && (
+            {sidebarVisible && selectedBin && (
                 <div className="sidebar" style={{ width: '25%', height: '100vh', float: 'left', padding: '10px', boxSizing: 'border-box' }}>
-                    {selectedBin ? (
-                        <div>
-                            <h2>{selectedBin.Name}</h2>
-                            <button onClick={() => {
-                                orsDirections.calculate({
-                                    coordinates: [[selectedBin.x, selectedBin.y]],
-                                    profile: 'driving-car',
-                                    format: 'geojson'
-                                }).then(response => {
-                                    const route = response.routes[0].geometry;
+                    <h2>{selectedBin.Name}</h2>
+                    <button onClick={async () => {
+                        try {
+                            const session = await fetchAuthSession();
+                            console.log(session);
+                            const client = new LocationClient({
+                                credentials: session.credentials,
+                                region: 'us-east-1',
+                            });
 
-                                    if (mapInstance.current.getSource('route')) {
-                                        mapInstance.current.getSource('route').setData({
-                                            type: 'Feature',
-                                            properties: {},
-                                            geometry: route
-                                        });
-                                    } else {
-                                        mapInstance.current.addSource('route', {
-                                            type: 'geojson',
-                                            data: {
-                                                type: 'Feature',
-                                                properties: {},
-                                                geometry: route
-                                            }
-                                        });
+                            const params = {
+                                CalculatorName: 'MyRouteCalculator',
+                                DeparturePosition: [mapInstance.current.getCenter().lng, mapInstance.current.getCenter().lat],
+                                DestinationPosition: [selectedBin.x, selectedBin.y],
+                                TravelMode: 'Car' // Adjust travel mode if needed
+                            };
 
-                                        mapInstance.current.addLayer({
-                                            id: 'route',
-                                            type: 'line',
-                                            source: 'route',
-                                            layout: {
-                                                'line-join': 'round',
-                                                'line-cap': 'round'
-                                            },
-                                            paint: {
-                                                'line-color': '#3887be',
-                                                'line-width': 5,
-                                                'line-opacity': 0.75
-                                            }
-                                        });
-                                    }
-                                }).catch(error => {
-                                    console.error('Error getting directions:', error);
+                            const command = new CalculateRouteCommand(params);
+                            const response = await client.send(command);
+
+                            const route = response.Legs[0].Geometry.LineString;
+
+                            const routeGeoJSON = {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'LineString',
+                                    coordinates: route.map(([long, lat]) => [long, lat]),
+                                }
+                            };
+
+                            if (mapInstance.current.getSource('route')) {
+                                mapInstance.current.getSource('route').setData(routeGeoJSON);
+                            } else {
+                                mapInstance.current.addSource('route', {
+                                    type: 'geojson',
+                                    data: routeGeoJSON
                                 });
-                            }}>Get Directions</button>
-                            <button onClick={() => setSidebarVisible(false)}>Cancel</button>
-                        </div>
-                    ) : (
-                        <div>Select a bin to see details</div>
-                    )}
+
+                                mapInstance.current.addLayer({
+                                    id: 'route',
+                                    type: 'line',
+                                    source: 'route',
+                                    layout: {
+                                        'line-join': 'round',
+                                        'line-cap': 'round'
+                                    },
+                                    paint: {
+                                        'line-color': '#3887be',
+                                        'line-width': 5,
+                                        'line-opacity': 0.75
+                                    }
+                                });
+                            }
+                        } catch (error) {
+                            console.error('Error getting directions:', error);
+                        }
+                    }}>Get Directions</button>
+                    <button onClick={() => setSidebarVisible(false)}>Cancel</button>
                 </div>
             )}
         </div>

@@ -1,6 +1,6 @@
 {
   "auth": {
-    "fabricaidapp2ca16df2": {
+    "fabricaidapp28fdd40f": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -28,7 +28,7 @@
     }
   },
   "geo": {
-    "bins": {
+    "Bmap": {
       "accessType": "AuthorizedUsers",
       "dependsOn": [
         {
@@ -36,39 +36,7 @@
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "fabricaidapp2ca16df2"
-        }
-      ],
-      "isDefault": false,
-      "mapStyle": "VectorEsriStreets",
-      "providerPlugin": "awscloudformation",
-      "service": "Map"
-    },
-    "binsmap": {
-      "accessType": "AuthorizedUsers",
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "fabricaidapp2ca16df2"
-        }
-      ],
-      "isDefault": false,
-      "mapStyle": "VectorEsriStreets",
-      "providerPlugin": "awscloudformation",
-      "service": "Map"
-    },
-    "binsmap1": {
-      "accessType": "AuthorizedUsers",
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "fabricaidapp2ca16df2"
+          "resourceName": "fabricaidapp28fdd40f"
         }
       ],
       "isDefault": true,

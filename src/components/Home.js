@@ -14,6 +14,7 @@ const Home = () => {
     const handleShopClick = () => {
         navigate('/shop');
     };
+    
 
     const handleSignOut = async () => {
         try {

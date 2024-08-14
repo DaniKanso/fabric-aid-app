@@ -1,8 +1,9 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "fabricaidapp2ca16df2": {
+    "fabricaidapp28fdd40f": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "CreatedSNSRole": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
       "UserPoolArn": "string",
@@ -11,19 +12,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "geo": {
-    "bins": {
-      "Arn": "string",
-      "Name": "string",
-      "Region": "string",
-      "Style": "string"
-    },
-    "binsmap": {
-      "Arn": "string",
-      "Name": "string",
-      "Region": "string",
-      "Style": "string"
-    },
-    "binsmap1": {
+    "Bmap": {
       "Arn": "string",
       "Name": "string",
       "Region": "string",
