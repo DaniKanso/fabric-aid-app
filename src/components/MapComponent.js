@@ -75,6 +75,7 @@ const MapComponent = () => {
 
                         const command = new CalculateRouteCommand(params);
                         const response = await client.send(command);
+                        console.log(response);
 
                         const route = response.Legs[0].Geometry.LineString;
 
@@ -148,11 +149,11 @@ const MapComponent = () => {
                     <button onClick={async () => {
                         try {
                             const session = await fetchAuthSession();
-                            console.log(session);
                             const client = new LocationClient({
                                 credentials: session.credentials,
                                 region: 'us-east-1',
                             });
+                            
 
                             const params = {
                                 CalculatorName: 'MyRouteCalculator',
@@ -163,6 +164,7 @@ const MapComponent = () => {
 
                             const command = new CalculateRouteCommand(params);
                             const response = await client.send(command);
+                            console.log(response);
 
                             const route = response.Legs[0].Geometry.LineString;
 
