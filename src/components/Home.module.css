@@ -94,3 +94,80 @@ p {
     background-color: var(--primary-dark-color);
     transform: translateY(-3px);
 }
+
+.profileContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 40px; /* Adjust the vertical positioning just below the button */
+    right: 0; /* Align with the button */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 160px; /* Ensures dropdown menu has a decent width */
+}
+
+.dropdownItem {
+    display: block;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdownItem:hover {
+    background-color: #f1f1f1;
+}
+
+.profileContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%; /* Ensures dropdown is flush with the button */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 160px;
+}
+
+.dropdownItem {
+    display: block;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdownItem:hover {
+    background-color: #f1f1f1;
+}
+
+.navButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white; /* Changed the text color to white */
+    font-size: 16px;
+    padding: 10px;
+}
+
+.navButton:hover {
+    color: #007bff;
+}

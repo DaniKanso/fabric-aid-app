@@ -1,11 +1,13 @@
 // components/Home.js
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'aws-amplify/auth';
 import styles from './Home.module.css';
 
 const Home = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const navigate = useNavigate();
+    const dropdownRef = useRef(null);
 
     const handleDonateClick = () => {
         navigate('/map');
@@ -14,7 +16,14 @@ const Home = () => {
     const handleShopClick = () => {
         navigate('/shop');
     };
-    
+
+    const handleProfileClick = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleEmployeeClick = () => {
+        navigate('/employee');
+    };
 
     const handleSignOut = async () => {
         try {
@@ -25,13 +34,44 @@ const Home = () => {
         }
     };
 
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        if (isDropdownOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isDropdownOpen]);
+
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
                 <div className={styles.navLogo}>Fabric Donation App</div>
                 <div className={styles.navLinks}>
-                    <button onClick={handleSignOut} className={styles.navButton}>Sign Out</button>
+                <div className={styles.profileContainer}>
+                    <button onClick={handleProfileClick} className={styles.navButton}>
+                        Profile
+                    </button>
+                    {isDropdownOpen && (
+                        <div ref={dropdownRef} className={styles.dropdownMenu}>
+                            <button onClick={handleEmployeeClick} className={styles.dropdownItem}>
+                                For Employees
+                            </button>
+                            <button onClick={handleSignOut} className={styles.dropdownItem}>
+                                Sign Out
+                            </button>
+                        </div>
+                    )}
                 </div>
+            </div>
             </nav>
             <main className={styles.mainContent}>
                 <h1>Welcome to the Fabric Donation App</h1>
