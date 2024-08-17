@@ -9,11 +9,54 @@ import { LocationClient, CalculateRouteCommand } from '@aws-sdk/client-location'
 import './MapComponent.css';
 import { fetchAuthSession } from '@aws-amplify/auth';
 
+const generateCode = () => {
+    return Math.floor(10000 + Math.random() * 89999).toString();
+};
+
 const MapComponent = () => {
     const mapRef = useRef(null);
     const [selectedBin, setSelectedBin] = useState(null);
+    const [donationCode, setDonationCode] = useState('');
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const mapInstance = useRef(null);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+
+    const saveDonation = async (donationCode, userId) => {
+        try {
+            const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations', {   
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: userId,  // You might also want to send user ID if available
+                    donationCode: donationCode,
+                }),
+            });
+            
+            console.log(JSON.stringify({
+                userId: userId,  // You might also want to send user ID if available
+                donationCode: donationCode,
+            }),)
+
+            const result = await response;
+            console.log(response);
+            if (response.ok) {
+                setSuccessMessageVisible(true);
+                
+                setTimeout(() => {
+                    setSuccessMessageVisible(false);
+                }, 3000);
+
+                console.log('Donation saved successfully:', result);
+            } else {
+                console.error('Error saving donation:', result);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
     const userLocationRef = useRef(null);
 
     useEffect(() => {
@@ -188,6 +231,57 @@ const MapComponent = () => {
                     <h2>{selectedBin.Name}</h2>
                     <button onClick={handleGetDirections}>Get Directions</button>
                     <button onClick={() => setSidebarVisible(false)}>Cancel</button>
+                </div>
+            )}
+
+            {successMessageVisible && (
+                <div style={{
+                    position: 'fixed',
+                    top: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'green',
+                    color: 'white',
+                    padding: '10px 20px',
+                    borderRadius: '8px',
+                    zIndex: 1100,
+                }}>
+                    Donation Saved Successfully
+                </div>
+            )}
+
+            {isPopupVisible && (
+                <div className="popup-overlay" style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 1000
+                }}>
+                    <div className="donate">
+                        <h3>Donation Code</h3>
+                        <p>Your code is</p>
+                        <h2><strong>{donationCode}</strong></h2>
+
+                        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                            <button onClick={() => {
+                                const userId = '12345'; 
+                                saveDonation(donationCode, userId);
+
+                                setIsPopupVisible(false);
+                                }}>
+                                Donate
+                            </button>
+                            <button onClick={() => setIsPopupVisible(false)} style={{ marginLeft: '10px' }}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

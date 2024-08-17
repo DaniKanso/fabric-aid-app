@@ -41,3 +41,45 @@
 .sidebar button + button {
     margin-top: 15px; /* Add extra space between buttons */
 }
+
+.donate {
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    max-width: 80%;
+    box-sizing: border-box;
+    color: #282c34;
+}
+
+.donate h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #282c34;
+}
+
+.donate h2 {
+    margin-top: 0%;
+    font-size: 1.7em;
+    color: #282c34;
+}
+
+.donate button {
+    background: #3887be;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%; /* Make buttons full-width for consistency */
+}
+
+.donate button:hover {
+    background: #286d99;
+    transform: translateY(-3px);
+}

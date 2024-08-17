@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-route
 import HomePage from './components/Home';
 import MapPage from './components/MapPage'; // Import MapPage
 import ShopMapPage from './components/ShopMapPage';
+import EmployeePage from './components/EmployeePage';
 
 
 
@@ -47,6 +48,7 @@ function AppWithRouter() {
                 <Route path="/map" element={<MapPage />} />
                 <Route path="/shop" element={<ShopMapPage />} />
                 <Route path="/login" element={<App />} />
+                <Route path="/employee" element={<EmployeePage />} />
             </Routes>
         </Router>
     );
