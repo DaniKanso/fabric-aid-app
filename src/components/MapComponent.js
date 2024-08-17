@@ -22,8 +22,11 @@ const MapComponent = () => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [successMessageVisible, setSuccessMessageVisible] = useState(false);
 
-    const saveDonation = async (donationCode, userId) => {
+    const saveDonation = async (donationCode) => {
         try {
+            const session = await fetchAuthSession();
+            const userId = session.userSub;
+
             const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations', {   
             method: 'POST',
                 headers: {
@@ -274,8 +277,7 @@ const MapComponent = () => {
 
                         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
                             <button onClick={() => {
-                                const userId = '12345'; 
-                                saveDonation(donationCode, userId);
+                                saveDonation(donationCode);
 
                                 setIsPopupVisible(false);
                                 }}>

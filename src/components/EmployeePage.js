@@ -8,7 +8,7 @@ const EmployeePage = () => {
     useEffect(() => {
         const fetchDonations = async () => {
             try {
-                const response = await fetch('https://your-api-endpoint/donations'); // Replace with your API endpoint
+                const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_donations'); // Replace with your API endpoint
                 const data = await response.json();
                 setDonations(data);
             } catch (error) {

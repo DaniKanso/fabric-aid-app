@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/auth": "^6.3.13",
+    "@aws-amplify/auth": "^6.3.14",
     "@aws-amplify/core": "^6.3.9",
     "@aws-amplify/geo": "^3.0.42",
     "@aws-amplify/ui-react": "^6.1.12",
@@ -19,7 +19,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^7.0.0",
-    "aws-amplify": "^6.5.0",
+    "amplify": "^0.0.11",
+    "aws-amplify": "^6.5.1",
     "aws-sdk": "^2.1672.0",
     "leaflet": "^1.9.4",
     "maplibre-gl": "^2.4.0",
@@ -30,7 +31,7 @@
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.24.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
