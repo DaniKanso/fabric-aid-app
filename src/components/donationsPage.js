@@ -8,7 +8,7 @@ const DonationsPage = () => {
     const fetchDonations = async () => {
         try {
             const session = await fetchAuthSession();
-            const userEmail = session.tokens.idToken.payload.email; // User's email
+            const userEmail = session.tokens.idToken.payload.email;
 
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_donations`);
             const data = await response.json();

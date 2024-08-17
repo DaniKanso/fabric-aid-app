@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './EmployeePage.module.css'; // Custom CSS
+import styles from './EmployeePage.module.css';
 
 const EmployeePage = () => {
     const [donations, setDonations] = useState([]);
@@ -7,6 +7,8 @@ const EmployeePage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [successMessageVisible, setSuccessMessageVisible] = useState(false);
     const [rejSuccessMessageVisible, setrejSuccessMessageVisible] = useState(false);
+    const [showApproveModal, setShowApproveModal] = useState(false);
+    const [selectedDonationId, setSelectedDonationId] = useState(null);
 
     useEffect(() => {
         const fetchDonations = async () => {
@@ -24,22 +26,36 @@ const EmployeePage = () => {
         fetchDonations();
     }, []);
 
-    const handleAccept = async (donationId) => {
+    const handleAccept = (donationId) => {
+        setSelectedDonationId(donationId);
+        setShowApproveModal(true);
+    };
+
+    const handleModalOptionClick = async (option) => {
+        const percentageMap = {
+            'Okaz': 15,
+            'Second Base': 10,
+            'Souk L Khlanj': 25,
+        };
+        const selectedPercentage = percentageMap[option];
+
+        setShowApproveModal(false);
+
         try {
-            console.log(JSON.stringify({ donationId: donationId, }));
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/approve`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    donationId: donationId,
+                    donationId: selectedDonationId,
+                    option: option,
+                    percentage: selectedPercentage,
                 }),
             });
 
-
             if (response.ok) {
-                setDonations(donations.filter(donation => donation.id !== donationId));
+                setDonations(donations.filter(donation => donation.id !== selectedDonationId));
                 setSuccessMessageVisible(true);
                 setTimeout(() => setSuccessMessageVisible(false), 3000);
             } else {
@@ -123,6 +139,18 @@ const EmployeePage = () => {
                 </div>
             )}
 
+            {showApproveModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <h3>Select an Option</h3>
+                        <button className={styles.modalButton} onClick={() => handleModalOptionClick('Okaz')}>Okaz (15%)</button>
+                        <button className={styles.modalButton} onClick={() => handleModalOptionClick('Second Base')}>Second Base (10%)</button>
+                        <button className={styles.modalButton} onClick={() => handleModalOptionClick('Souk L Khlanj')}>Souk L Khlanj (25%)</button>
+                        <button className={styles.modalButton} onClick={() => setShowApproveModal(false)}>Cancel</button>
+                    </div>
+                </div>
+            )}
+
             <input
                 type="text"
                 placeholder="Search Donation Code"
@@ -164,6 +192,5 @@ const EmployeePage = () => {
         </div>
     );
 };
-
 
 export default EmployeePage;
