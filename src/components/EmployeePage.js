@@ -4,12 +4,14 @@ import styles from './EmployeePage.module.css'; // Custom CSS
 const EmployeePage = () => {
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchDonations = async () => {
             try {
-                const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_donations'); // Replace with your API endpoint
+                const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_donations');
                 const data = await response.json();
+                console.log(data);
                 setDonations(data);
             } catch (error) {
                 console.error('Error fetching donations:', error);
@@ -23,12 +25,17 @@ const EmployeePage = () => {
 
     const handleAccept = async (donationId) => {
         try {
-            const response = await fetch(`https://your-api-endpoint/donations/${donationId}/accept`, {
+            console.log(JSON.stringify({ donationId: donationId, }));
+            const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/approve`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    donationId: donationId,
+                }),
             });
+
 
             if (response.ok) {
                 alert('Donation accepted');
@@ -61,6 +68,10 @@ const EmployeePage = () => {
         }
     };
 
+    const filteredDonations = donations.filter(donation =>
+        donation.code.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     if (loading) {
         return <p>Loading donations...</p>;
     }
@@ -72,25 +83,32 @@ const EmployeePage = () => {
     return (
         <div className={styles.container}>
             <h1>Manage Donations</h1>
+                <input
+                    type="text"
+                    placeholder="Search Donation Code"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                />
             <table className={styles.table}>
                 <thead>
                     <tr>
                         <th>Donation Code</th>
-                        <th>User ID</th>
+                        <th>User Email</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {donations.map((donation) => (
+                    {filteredDonations.map((donation) => (
                         <tr key={donation.id}>
-                            <td>{donation.donationCode}</td>
-                            <td>{donation.userId}</td>
+                            <td>{donation.code || 'N/A'}</td>
+                            <td>{donation.user_email || 'N/A'}</td>
                             <td>
                                 <button
                                     className={styles.acceptButton}
                                     onClick={() => handleAccept(donation.id)}
                                 >
-                                    Accept
+                                    Approve
                                 </button>
                                 <button
                                     className={styles.rejectButton}
@@ -102,6 +120,7 @@ const EmployeePage = () => {
                         </tr>
                     ))}
                 </tbody>
+
             </table>
         </div>
     );
