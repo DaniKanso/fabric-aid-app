@@ -37,13 +37,16 @@ const MapComponent = () => {
                     userId: userId,
                     donationCode: donationCode,
                     user_email: userEmail,
+                    binName: selectedBin.Name,
                 }),
             });
             
             console.log(JSON.stringify({
                 userId: userId,
                 donationCode: donationCode,
-            }),)
+                user_email: userEmail,
+                binName: selectedBin.Name,
+            }));
 
             const result = await response;
             console.log(response);

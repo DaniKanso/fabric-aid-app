@@ -10,6 +10,7 @@ import HomePage from './components/Home';
 import MapPage from './components/MapPage'; // Import MapPage
 import ShopMapPage from './components/ShopMapPage';
 import EmployeePage from './components/EmployeePage';
+import DonationsPage from './components/donationsPage';
 
 
 
@@ -49,6 +50,7 @@ function AppWithRouter() {
                 <Route path="/shop" element={<ShopMapPage />} />
                 <Route path="/login" element={<App />} />
                 <Route path="/employee" element={<EmployeePage />} />
+                <Route path="/donations" element={<DonationsPage />} />
             </Routes>
         </Router>
     );

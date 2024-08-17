@@ -5,13 +5,14 @@ const EmployeePage = () => {
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+    const [rejSuccessMessageVisible, setrejSuccessMessageVisible] = useState(false);
 
     useEffect(() => {
         const fetchDonations = async () => {
             try {
-                const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_donations');
+                const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/get_pending_donations');
                 const data = await response.json();
-                console.log(data);
                 setDonations(data);
             } catch (error) {
                 console.error('Error fetching donations:', error);
@@ -38,8 +39,9 @@ const EmployeePage = () => {
 
 
             if (response.ok) {
-                alert('Donation accepted');
                 setDonations(donations.filter(donation => donation.id !== donationId));
+                setSuccessMessageVisible(true);
+                setTimeout(() => setSuccessMessageVisible(false), 3000);
             } else {
                 console.error('Failed to accept donation');
             }
@@ -50,16 +52,20 @@ const EmployeePage = () => {
 
     const handleReject = async (donationId) => {
         try {
-            const response = await fetch(`https://your-api-endpoint/donations/${donationId}/reject`, {
+            const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/reject`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    donationId: donationId,
+                }),
             });
 
             if (response.ok) {
-                alert('Donation rejected');
                 setDonations(donations.filter(donation => donation.id !== donationId));
+                setrejSuccessMessageVisible(true);
+                setTimeout(() => setrejSuccessMessageVisible(false), 3000);
             } else {
                 console.error('Failed to reject donation');
             }
@@ -83,13 +89,47 @@ const EmployeePage = () => {
     return (
         <div className={styles.container}>
             <h1>Manage Donations</h1>
-                <input
-                    type="text"
-                    placeholder="Search Donation Code"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={styles.searchInput}
-                />
+            {successMessageVisible && (
+                <div style={{
+                    position: 'fixed',
+                    top: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'green',
+                    color: 'white',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    zIndex: 1100,
+                    fontSize: '14px',
+                }}>
+                    Donation Approved Successfully
+                </div>
+            )}
+
+            {rejSuccessMessageVisible && (
+                <div style={{
+                    position: 'fixed',
+                    top: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'green',
+                    color: 'white',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    zIndex: 1100,
+                    fontSize: '14px',
+                }}>
+                    Donation Rejected Successfully
+                </div>
+            )}
+
+            <input
+                type="text"
+                placeholder="Search Donation Code"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+            />
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -120,10 +160,10 @@ const EmployeePage = () => {
                         </tr>
                     ))}
                 </tbody>
-
             </table>
         </div>
     );
 };
+
 
 export default EmployeePage;
