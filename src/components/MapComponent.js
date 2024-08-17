@@ -230,6 +230,10 @@ const MapComponent = () => {
                 <div className="sidebar" style={{ width: '25%', height: '100vh', float: 'left', padding: '10px', boxSizing: 'border-box' }}>
                     <h2>{selectedBin.Name}</h2>
                     <button onClick={handleGetDirections}>Get Directions</button>
+                    <button onClick={() => {
+                        setDonationCode(generateCode());
+                        setIsPopupVisible(true);
+                        }}>Donate</button>
                     <button onClick={() => setSidebarVisible(false)}>Cancel</button>
                 </div>
             )}
