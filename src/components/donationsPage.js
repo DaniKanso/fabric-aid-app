@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './navBar';
 import { fetchAuthSession } from '@aws-amplify/auth';
+import styles from './DonationsPage.module.css'; // Assuming you have a CSS file for styling
 
 const DonationsPage = () => {
     const [donations, setDonations] = useState([]);
@@ -28,20 +29,36 @@ const DonationsPage = () => {
         fetchDonations();
     }, []);
 
-    return (
-        <div>
-            <Navbar />
-            <h2>Your Previous Donations</h2>
-            {loading ? (
+    if (loading) {
+        return (
+            <div className={styles.loadingContainer}>
+                <Navbar />
                 <p>Loading donations...</p>
-            ) : donations.length > 0 ? (
-                <ul>
-                    {donations.map((donation, index) => (
-                        <li key={index}>
-                            Code: {donation.code || 'N/A'} Bin: {donation.bin_name || 'N/A'}
-                        </li>
-                    ))}
-                </ul>
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.container}>
+            <Navbar />
+            <h1 className={styles.heading}>Your Previous Donations</h1>
+            {donations.length > 0 ? (
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Bin Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {donations.map((donation, index) => (
+                            <tr key={index}>
+                                <td>{donation.code || 'N/A'}</td>
+                                <td>{donation.bin_name || 'N/A'}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             ) : (
                 <p>You haven't made any donations yet.</p>
             )}

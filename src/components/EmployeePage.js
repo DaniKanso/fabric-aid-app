@@ -96,11 +96,22 @@ const EmployeePage = () => {
     );
 
     if (loading) {
-        return <p>Loading donations...</p>;
+        return (
+            <div className={styles.loadingContainer}>
+                <Navbar />
+                <p>Loading donations...</p>
+            </div>
+        );
     }
+    
 
     if (donations.length === 0) {
-        return <p>No donations to review at the moment.</p>;
+        return (
+            <div className={styles.loadingContainer}>
+                <Navbar />
+                <p>No donations to view at the moment.</p>
+            </div>
+        );
     }
 
     return (

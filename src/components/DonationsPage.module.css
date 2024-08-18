@@ -1,28 +1,34 @@
+/* DonationsPage.module.css */
+
 .container {
-    max-width: 800px;
+    max-width: 800px; /* Set the container width */
     margin: 0 auto;
     padding: 60px;
-    text-align: center;
+    text-align: center; /* Center-align the content */
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 20px; /* Added some spacing above the table */
 }
 
 .table th, .table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
-    color: black;
-    background-color: white;
+    color: black; /* Ensuring text is black */
+    background-color: white; /* Ensuring all rows have a white background */
     padding: 10px;
 }
 
 .table th {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Slightly different background for header */
     font-weight: bold;
+}
+
+.table tr:hover {
+    background-color: #ddd; /* Hover effect to highlight a row */
 }
 
 .acceptButton, .rejectButton {
@@ -42,6 +48,7 @@
     color: white;
 }
 
+/* Modal styles */
 .modalOverlay {
     position: fixed;
     top: 0;

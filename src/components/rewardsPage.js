@@ -25,7 +25,12 @@ const RewardsPage = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading rewards...</p>;
+    return (
+        <div className={styles.loadingContainer}>
+            <Navbar />
+            <p>Loading rewards...</p>
+        </div>
+    );
   }
 
   if (error) {
@@ -43,7 +48,6 @@ const RewardsPage = () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>User Email</th>
             <th>Store Name</th>
             <th>Percentage</th>
             <th>Status</th>
@@ -52,7 +56,6 @@ const RewardsPage = () => {
         <tbody>
           {rewards.map((reward, index) => (
             <tr key={index}>
-              <td>{reward.user_email}</td>
               <td>{reward.store_name}</td>
               <td>{reward.percentage}%</td>
               <td>{reward.status}</td>
