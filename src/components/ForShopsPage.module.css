@@ -1,64 +1,78 @@
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 60px;
-    text-align: center;
-  }
-  
-  .storeButton {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 0 10px;
-    cursor: pointer;
-    font-size: var(--font-size-navbutton);
-    border-radius: var(--border-radius);
-    transition: background-color 0.3s ease;
-  }
-  
-  .storeButton:hover {
-    background-color: var(--primary-dark-color);
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
-    color: black;
-    background-color: white;
-    padding: 10px;
-  }
-  
-  .redeemButton {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .redeemButton:hover {
-    background-color: #218838;
-  }
-  
-  .backButton {
-    background-color: #6c757d;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .backButton:hover {
-    background-color: #5a6268;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px;
+  text-align: center;
+}
+
+.storeButton {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: var(--font-size-navbutton);
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease;
+}
+
+.storeButton:hover {
+  background-color: var(--primary-dark-color);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  color: black;
+  background-color: white;
+  padding: 10px;
+}
+
+.redeemButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.redeemButton:hover {
+  background-color: #218838;
+}
+
+.backButton {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.backButton:hover {
+  background-color: #5a6268;
+}
+
+.spinner {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

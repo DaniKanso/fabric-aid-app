@@ -10,6 +10,8 @@ const EmployeePage = () => {
     const [rejSuccessMessageVisible, setrejSuccessMessageVisible] = useState(false);
     const [showApproveModal, setShowApproveModal] = useState(false);
     const [selectedDonationId, setSelectedDonationId] = useState(null);
+    const [loadingApprove, setLoadingApprove] = useState(null); // Tracks the loading state of the Approve button
+    const [loadingReject, setLoadingReject] = useState(null); // Tracks the loading state of the Reject button
 
     useEffect(() => {
         const fetchDonations = async () => {
@@ -41,6 +43,7 @@ const EmployeePage = () => {
         const selectedPercentage = percentageMap[option];
 
         setShowApproveModal(false);
+        setLoadingApprove(selectedDonationId); // Start the loading animation for the Approve button
 
         try {
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/approve`, {
@@ -64,10 +67,14 @@ const EmployeePage = () => {
             }
         } catch (error) {
             console.error('Error accepting donation:', error);
+        } finally {
+            setLoadingApprove(null); // Stop the loading animation for the Approve button
         }
     };
 
     const handleReject = async (donationId) => {
+        setLoadingReject(donationId); // Start the loading animation for the Reject button
+
         try {
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/reject`, {
                 method: 'POST',
@@ -88,6 +95,8 @@ const EmployeePage = () => {
             }
         } catch (error) {
             console.error('Error rejecting donation:', error);
+        } finally {
+            setLoadingReject(null); // Stop the loading animation for the Reject button
         }
     };
 
@@ -103,7 +112,6 @@ const EmployeePage = () => {
             </div>
         );
     }
-    
 
     if (donations.length === 0) {
         return (
@@ -190,14 +198,24 @@ const EmployeePage = () => {
                                 <button
                                     className={styles.acceptButton}
                                     onClick={() => handleAccept(donation.id)}
+                                    disabled={loadingApprove === donation.id}
                                 >
-                                    Approve
+                                    {loadingApprove === donation.id ? (
+                                        <span className={styles.loadingSpinner}></span>
+                                    ) : (
+                                        'Approve'
+                                    )}
                                 </button>
                                 <button
                                     className={styles.rejectButton}
                                     onClick={() => handleReject(donation.id)}
+                                    disabled={loadingReject === donation.id}
                                 >
-                                    Reject
+                                    {loadingReject === donation.id ? (
+                                        <span className={styles.loadingSpinner}></span>
+                                    ) : (
+                                        'Reject'
+                                    )}
                                 </button>
                             </td>
                         </tr>

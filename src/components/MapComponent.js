@@ -21,15 +21,19 @@ const MapComponent = () => {
     const mapInstance = useRef(null);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+    const [loadingDirections, setLoadingDirections] = useState(false);
+    const [loadingDonate, setLoadingDonate] = useState(false);
 
     const saveDonation = async (donationCode) => {
+        setLoadingDonate(true); // Start loading animation for Donate button
+
         try {
             const session = await fetchAuthSession();
             const userId = session.userSub;
             const userEmail = session.tokens.idToken.payload.email;
 
             const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations', {   
-            method: 'POST',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -40,31 +44,23 @@ const MapComponent = () => {
                     binName: selectedBin.Name,
                 }),
             });
-            
-            console.log(JSON.stringify({
-                userId: userId,
-                donationCode: donationCode,
-                user_email: userEmail,
-                binName: selectedBin.Name,
-            }));
 
-            const result = await response;
-            console.log(response);
             if (response.ok) {
                 setSuccessMessageVisible(true);
-                
                 setTimeout(() => {
                     setSuccessMessageVisible(false);
                 }, 3000);
-
-                console.log('Donation saved successfully:', result);
+                console.log('Donation saved successfully:', await response.json());
             } else {
-                console.error('Error saving donation:', result);
+                console.error('Error saving donation:', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            setLoadingDonate(false); // Stop loading animation for Donate button
         }
     };
+
     const userLocationRef = useRef(null);
 
     useEffect(() => {
@@ -78,7 +74,6 @@ const MapComponent = () => {
 
                 mapInstance.current = map;
 
-                // Add the user's location marker (red)
                 new maplibregl.Marker({ color: 'red' })
                     .setLngLat(center)
                     .addTo(map);
@@ -148,47 +143,47 @@ const MapComponent = () => {
             console.warn('No bin selected for routing.');
             return;
         }
-    
+
+        setLoadingDirections(true); // Start loading animation for Get Directions button
+
         try {
             const session = await fetchAuthSession();
             const client = new LocationClient({
                 credentials: session.credentials,
                 region: 'us-east-1',
             });
-    
+
             const params = {
                 CalculatorName: 'MyRouteCalculator',
                 DeparturePosition: userLocationRef.current,  // Start from the user's location
                 DestinationPosition: [selectedBin.x, selectedBin.y],  // End at the selected bin
                 TravelMode: 'Car'
             };
-    
+
             console.log('Calculating route with params:', params);
             const command = new CalculateRouteCommand(params);
             const response = await client.send(command);
             console.log('Route Response:', response);
-    
+
             if (response.Legs && response.Legs.length > 0) {
                 let routeCoordinates;
-    
-                // Use Polyline if available
+
                 if (response.Legs[0].Geometry && response.Legs[0].Geometry.LineString) {
                     routeCoordinates = response.Legs[0].Geometry.LineString;
                 } else {
-                    // Fallback to using Steps
                     routeCoordinates = response.Legs[0].Steps.flatMap(step => [
                         [step.StartPosition[0], step.StartPosition[1]],
                         [step.EndPosition[0], step.EndPosition[1]]
                     ]);
                 }
-    
+
                 console.log('Route Coordinates:', routeCoordinates);
-    
+
                 if (routeCoordinates.length === 0) {
                     console.warn('No route steps found.');
                     return;
                 }
-    
+
                 const routeGeoJSON = {
                     type: 'Feature',
                     geometry: {
@@ -196,7 +191,7 @@ const MapComponent = () => {
                         coordinates: routeCoordinates,
                     }
                 };
-    
+
                 if (mapInstance.current.getSource('route')) {
                     mapInstance.current.getSource('route').setData(routeGeoJSON);
                 } else {
@@ -204,7 +199,7 @@ const MapComponent = () => {
                         type: 'geojson',
                         data: routeGeoJSON
                     });
-    
+
                     mapInstance.current.addLayer({
                         id: 'route',
                         type: 'line',
@@ -227,21 +222,26 @@ const MapComponent = () => {
         } catch (error) {
             console.error('Error getting directions:', error);
             alert('Failed to get directions. Please try again.');
+        } finally {
+            setLoadingDirections(false); // Stop loading animation for Get Directions button
         }
     };
-    
-    
+
     return (
         <div className="map-container">
             <div ref={mapRef} id="map" style={{ width: sidebarVisible ? '75%' : '100%', height: '100vh', float: 'left' }} />
             {sidebarVisible && selectedBin && (
                 <div className="sidebar" style={{ width: '25%', height: '100vh', float: 'left', padding: '10px', boxSizing: 'border-box' }}>
                     <h2>{selectedBin.Name}</h2>
-                    <button onClick={handleGetDirections}>Get Directions</button>
+                    <button onClick={handleGetDirections} disabled={loadingDirections}>
+                        {loadingDirections ? <span className="loadingSpinner"></span> : 'Get Directions'}
+                    </button>
                     <button onClick={() => {
                         setDonationCode(generateCode());
                         setIsPopupVisible(true);
-                        }}>Donate</button>
+                    }} disabled={loadingDonate}>
+                        {loadingDonate ? <span className="loadingSpinner"></span> : 'Donate'}
+                    </button>
                     <button onClick={() => setSidebarVisible(false)}>Cancel</button>
                 </div>
             )}
