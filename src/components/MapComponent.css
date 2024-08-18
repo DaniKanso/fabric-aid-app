@@ -9,8 +9,8 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     overflow-y: auto;
-    width: 300px; /* Adjust width as needed */
-    border-right: 2px solid #61dafb; /* Border for visual separation */
+    width: 300px;
+    border-right: 2px solid #61dafb;
     box-sizing: border-box;
 }
 
@@ -30,7 +30,7 @@
     margin-top: 10px;
     font-size: 1em;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 100%; /* Make buttons full-width for consistency */
+    width: 100%;
 }
 
 .sidebar button:hover {
@@ -39,7 +39,7 @@
 }
 
 .sidebar button + button {
-    margin-top: 15px; /* Add extra space between buttons */
+    margin-top: 15px;
 }
 
 .donate {
@@ -76,7 +76,7 @@
     margin-top: 10px;
     font-size: 1em;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 100%; /* Make buttons full-width for consistency */
+    width: 100%;
 }
 
 .donate button:hover {

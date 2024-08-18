@@ -7,7 +7,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './components/Home';
-import MapPage from './components/MapPage'; // Import MapPage
+import MapPage from './components/MapPage';
 import ShopMapPage from './components/ShopMapPage';
 import EmployeePage from './components/EmployeePage';
 import DonationsPage from './components/donationsPage';

@@ -57,7 +57,7 @@ const MapComponent = () => {
         } catch (error) {
             console.error('Error:', error);
         } finally {
-            setLoadingDonate(false); // Stop loading animation for Donate button
+            setLoadingDonate(false);
         }
     };
 
@@ -154,8 +154,8 @@ const MapComponent = () => {
 
             const params = {
                 CalculatorName: 'MyRouteCalculator',
-                DeparturePosition: userLocationRef.current,  // Start from the user's location
-                DestinationPosition: [selectedBin.x, selectedBin.y],  // End at the selected bin
+                DeparturePosition: userLocationRef.current,
+                DestinationPosition: [selectedBin.x, selectedBin.y],
                 TravelMode: 'Car'
             };
 

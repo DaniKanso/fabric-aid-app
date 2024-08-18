@@ -10,8 +10,8 @@ const EmployeePage = () => {
     const [rejSuccessMessageVisible, setrejSuccessMessageVisible] = useState(false);
     const [showApproveModal, setShowApproveModal] = useState(false);
     const [selectedDonationId, setSelectedDonationId] = useState(null);
-    const [loadingApprove, setLoadingApprove] = useState(null); // Tracks the loading state of the Approve button
-    const [loadingReject, setLoadingReject] = useState(null); // Tracks the loading state of the Reject button
+    const [loadingApprove, setLoadingApprove] = useState(null);
+    const [loadingReject, setLoadingReject] = useState(null);
 
     useEffect(() => {
         const fetchDonations = async () => {
@@ -43,7 +43,7 @@ const EmployeePage = () => {
         const selectedPercentage = percentageMap[option];
 
         setShowApproveModal(false);
-        setLoadingApprove(selectedDonationId); // Start the loading animation for the Approve button
+        setLoadingApprove(selectedDonationId);
 
         try {
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/approve`, {
@@ -68,12 +68,12 @@ const EmployeePage = () => {
         } catch (error) {
             console.error('Error accepting donation:', error);
         } finally {
-            setLoadingApprove(null); // Stop the loading animation for the Approve button
+            setLoadingApprove(null);
         }
     };
 
     const handleReject = async (donationId) => {
-        setLoadingReject(donationId); // Start the loading animation for the Reject button
+        setLoadingReject(donationId);
 
         try {
             const response = await fetch(`https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/donations/reject`, {
@@ -96,7 +96,7 @@ const EmployeePage = () => {
         } catch (error) {
             console.error('Error rejecting donation:', error);
         } finally {
-            setLoadingReject(null); // Stop the loading animation for the Reject button
+            setLoadingReject(null);
         }
     };
 

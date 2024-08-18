@@ -86,7 +86,6 @@ const MapComponent = () => {
             date: new Date().toISOString(),
         };
 
-        // Save the donation data to your backend/database here
         console.log('Donation data:', donationData);
 
         setSidebarVisible(false);

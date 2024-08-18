@@ -8,7 +8,7 @@ const ForShopsPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessageVisible, setSuccessMessageVisible] = useState(false);
-    const [loadingRewardId, setLoadingRewardId] = useState(null); // New state to track which reward is being redeemed
+    const [loadingRewardId, setLoadingRewardId] = useState(null);
 
     const stores = ["Okaz", "Second Base", "Souk L Khlanj"];
 
@@ -39,7 +39,7 @@ const ForShopsPage = () => {
     const handleRedeem = async (rewardId) => {
         console.log(`Redeeming reward with ID: ${rewardId}`);
         
-        setLoadingRewardId(rewardId); // Set the loadingRewardId state to the ID of the reward being redeemed
+        setLoadingRewardId(rewardId);
         
         try {
             const response = await fetch('https://gbey1a7ee9.execute-api.us-east-1.amazonaws.com/pleaseWork/redeem_reward', {
@@ -67,7 +67,7 @@ const ForShopsPage = () => {
             console.error("Error redeeming reward:", error);
             setError("Failed to redeem reward. Please try again later.");
         } finally {
-            setLoadingRewardId(null); // Reset loadingRewardId when the request is complete
+            setLoadingRewardId(null);
         }
     };
 
@@ -132,10 +132,10 @@ const ForShopsPage = () => {
                                             <button
                                                 onClick={() => handleRedeem(reward.id)}
                                                 className={styles.redeemButton}
-                                                disabled={loadingRewardId === reward.id} // Disable button while loading
+                                                disabled={loadingRewardId === reward.id}
                                             >
                                                 {loadingRewardId === reward.id ? (
-                                                    <div className={styles.spinner}></div> // Show spinner if loading
+                                                    <div className={styles.spinner}></div>
                                                 ) : (
                                                     'Redeem'
                                                 )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './navBar';
-import { fetchAuthSession } from '@aws-amplify/auth'; // Assuming you're using AWS Amplify Auth
-import styles from './RewardsPage.module.css'; // Assuming you have a CSS file for styling
+import { fetchAuthSession } from '@aws-amplify/auth';
+import styles from './RewardsPage.module.css';
 
 const RewardsPage = () => {
   const [rewards, setRewards] = useState([]);

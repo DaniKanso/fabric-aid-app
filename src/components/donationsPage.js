@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './navBar';
 import { fetchAuthSession } from '@aws-amplify/auth';
-import styles from './DonationsPage.module.css'; // Assuming you have a CSS file for styling
+import styles from './DonationsPage.module.css';
 
 const DonationsPage = () => {
     const [donations, setDonations] = useState([]);

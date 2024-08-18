@@ -29,7 +29,6 @@ const ShopMapComponent = () => {
 
                 mapInstance.current = map;
 
-                // Add the user's location marker (red)
                 new maplibregl.Marker({ color: 'red' })
                     .setLngLat(center)
                     .addTo(map);
@@ -94,8 +93,8 @@ const ShopMapComponent = () => {
 
             const params = {
                 CalculatorName: 'MyRouteCalculator',
-                DeparturePosition: userLocationRef.current,  // Start from the user's location
-                DestinationPosition: [selectedShop.x, selectedShop.y],  // End at the selected shop
+                DeparturePosition: userLocationRef.current,
+                DestinationPosition: [selectedShop.x, selectedShop.y],
                 TravelMode: 'Car'
             };
 
