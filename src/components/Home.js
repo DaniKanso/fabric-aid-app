@@ -38,6 +38,10 @@ const Home = () => {
         navigate('/donations');
     };
 
+    const handleRewardsClick = () =>{
+        navigate('./rewards');
+    }
+
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsDropdownOpen(false);
@@ -66,6 +70,9 @@ const Home = () => {
                     </button>
                     {isDropdownOpen && (
                         <div ref={dropdownRef} className={styles.dropdownMenu}>
+                            <button onClick={handleRewardsClick} className={styles.dropdownItem}>
+                                Rewards
+                            </button>
                             <button onClick={handleDonationsClick} className={styles.dropdownItem}>
                                 Donations
                             </button>

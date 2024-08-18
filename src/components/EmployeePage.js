@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EmployeePage.module.css';
+import Navbar from './navBar';
 
 const EmployeePage = () => {
     const [donations, setDonations] = useState([]);
@@ -104,6 +105,7 @@ const EmployeePage = () => {
 
     return (
         <div className={styles.container}>
+            <Navbar />
             <h1>Manage Donations</h1>
             {successMessageVisible && (
                 <div style={{
@@ -163,6 +165,7 @@ const EmployeePage = () => {
                     <tr>
                         <th>Donation Code</th>
                         <th>User Email</th>
+                        <th>Bin Name</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -171,6 +174,7 @@ const EmployeePage = () => {
                         <tr key={donation.id}>
                             <td>{donation.code || 'N/A'}</td>
                             <td>{donation.user_email || 'N/A'}</td>
+                            <td>{donation.bin_name || 'N/A'}</td>
                             <td>
                                 <button
                                     className={styles.acceptButton}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from './navBar';
 import { fetchAuthSession } from '@aws-amplify/auth';
 
 const DonationsPage = () => {
@@ -29,6 +30,7 @@ const DonationsPage = () => {
 
     return (
         <div>
+            <Navbar />
             <h2>Your Previous Donations</h2>
             {loading ? (
                 <p>Loading donations...</p>

@@ -11,6 +11,7 @@ import MapPage from './components/MapPage'; // Import MapPage
 import ShopMapPage from './components/ShopMapPage';
 import EmployeePage from './components/EmployeePage';
 import DonationsPage from './components/donationsPage';
+import RewardsPage from './components/rewardsPage';
 
 
 
@@ -51,6 +52,7 @@ function AppWithRouter() {
                 <Route path="/login" element={<App />} />
                 <Route path="/employee" element={<EmployeePage />} />
                 <Route path="/donations" element={<DonationsPage />} />
+                <Route path="/rewards" element={<RewardsPage />} />
             </Routes>
         </Router>
     );

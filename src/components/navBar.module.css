@@ -1,0 +1,81 @@
+:root {
+    --primary-color: #61dafb;
+    --primary-dark-color: #21a1f1;
+    --secondary-color: #282c34;
+    --secondary-light-color: #3c3f4b;
+    --text-color: white;
+    --font-size-logo: 1.8em;
+    --font-size-navbutton: 1.1em;
+    --font-size-mainbutton: 1.3em;
+    --border-radius: 8px;
+}
+
+.navbar {
+    background-color: var(--secondary-color);
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.navLogo {
+    font-size: var(--font-size-logo);
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+}
+
+.profileContainer {
+    position: relative;
+}
+
+.navButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding:10px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
+}
+
+.navButton:hover {
+    background-color: var(--primary-dark-color);
+    color: #007bff;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 10px 20px;
+  text-align: left;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.dropdownItem:hover {
+  background-color: #f4f4f4;
+}
