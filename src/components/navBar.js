@@ -52,6 +52,7 @@ const Navbar = () => {
                     <button onClick={() => navigate('/rewards')} className={styles.dropdownItem}>Rewards</button>
                     <button onClick={() => navigate('/donations')} className={styles.dropdownItem}>Donations</button>
                     <button onClick={() => navigate('/employee')} className={styles.dropdownItem}>For Employees</button>
+                    <button onClick={() => navigate('/shops')} className={styles.dropdownItem}>For Shops</button>
                     <button onClick={handleSignOut} className={styles.dropdownItem}>Sign Out</button>
                 </div>
                 )}

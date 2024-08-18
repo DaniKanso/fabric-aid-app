@@ -42,6 +42,10 @@ const Home = () => {
         navigate('./rewards');
     }
 
+    const handleShopsClick = () =>{
+        navigate('./shops');
+    }
+
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsDropdownOpen(false);
@@ -78,6 +82,9 @@ const Home = () => {
                             </button>
                             <button onClick={handleEmployeeClick} className={styles.dropdownItem}>
                                 For Employees
+                            </button>
+                            <button onClick={handleShopsClick} className={styles.dropdownItem}>
+                                For Shops
                             </button>
                             <button onClick={handleSignOut} className={styles.dropdownItem}>
                                 Sign Out

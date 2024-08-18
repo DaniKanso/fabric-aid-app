@@ -1,34 +1,32 @@
-/* DonationsPage.module.css */
-
 .container {
-    max-width: 800px; /* Set the container width */
+    max-width: 800px; 
     margin: 0 auto;
     padding: 60px;
-    text-align: center; /* Center-align the content */
+    text-align: center;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Added some spacing above the table */
+    margin-top: 20px;
 }
 
 .table th, .table td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
-    color: black; /* Ensuring text is black */
-    background-color: white; /* Ensuring all rows have a white background */
+    color: black;
+    background-color: white; 
     padding: 10px;
 }
 
 .table th {
-    background-color: #f4f4f4; /* Slightly different background for header */
+    background-color: #f4f4f4; 
     font-weight: bold;
 }
 
 .table tr:hover {
-    background-color: #ddd; /* Hover effect to highlight a row */
+    background-color: #ddd; 
 }
 
 .acceptButton, .rejectButton {
