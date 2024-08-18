@@ -25,7 +25,7 @@ const MapComponent = () => {
     const [loadingDonate, setLoadingDonate] = useState(false);
 
     const saveDonation = async (donationCode) => {
-        setLoadingDonate(true); // Start loading animation for Donate button
+        setLoadingDonate(true);
 
         try {
             const session = await fetchAuthSession();
@@ -144,8 +144,7 @@ const MapComponent = () => {
             return;
         }
 
-        setLoadingDirections(true); // Start loading animation for Get Directions button
-
+        setLoadingDirections(true); 
         try {
             const session = await fetchAuthSession();
             const client = new LocationClient({
@@ -223,7 +222,7 @@ const MapComponent = () => {
             console.error('Error getting directions:', error);
             alert('Failed to get directions. Please try again.');
         } finally {
-            setLoadingDirections(false); // Stop loading animation for Get Directions button
+            setLoadingDirections(false);
         }
     };
 

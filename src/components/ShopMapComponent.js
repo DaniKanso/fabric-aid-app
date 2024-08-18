@@ -10,11 +10,13 @@ import './MapComponent.css';
 import { fetchAuthSession } from '@aws-amplify/auth';
 
 const ShopMapComponent = () => {
+
     const mapRef = useRef(null);
     const [selectedShop, setSelectedShop] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const mapInstance = useRef(null);
     const userLocationRef = useRef(null);
+    const [loadingDirections, setLoadingDirections] = useState(false);
 
     useEffect(() => {
         const initializeMap = async (center) => {
@@ -82,6 +84,7 @@ const ShopMapComponent = () => {
             return;
         }
 
+        setLoadingDirections(true); 
         try {
             const session = await fetchAuthSession();
             const client = new LocationClient({
@@ -156,6 +159,8 @@ const ShopMapComponent = () => {
         } catch (error) {
             console.error('Error getting directions:', error);
             alert('Failed to get directions. Please try again.');
+        } finally {
+            setLoadingDirections(false);
         }
     };
 
@@ -165,7 +170,9 @@ const ShopMapComponent = () => {
             {sidebarVisible && selectedShop && (
                 <div className="sidebar" style={{ width: '25%', height: '100vh', float: 'left', padding: '10px', boxSizing: 'border-box' }}>
                     <h2>{selectedShop.Name}</h2>
-                    <button onClick={handleGetDirections}>Get Directions</button>
+                    <button onClick={handleGetDirections} disabled={loadingDirections}>
+                        {loadingDirections ? <span className="loadingSpinner"></span> : 'Get Directions'}
+                    </button>
                     <button onClick={() => setSidebarVisible(false)}>Cancel</button>
                 </div>
             )}
